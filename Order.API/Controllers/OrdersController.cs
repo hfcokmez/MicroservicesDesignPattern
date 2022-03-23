@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Order.API.DTOs;
-using Order.API.Model;
+using Order.API.Models;
 using Shared.Event;
 using Shared.Messages;
 
@@ -28,7 +28,7 @@ namespace Order.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(OrderCreateDto orderCreate)
         {
-            var newOrder = new Model.Order
+            var newOrder = new Models.Order
             {
                 BuyerId = orderCreate.BuyerId,
                 Status = OrderStatus.Suspend,
@@ -41,8 +41,8 @@ namespace Order.API.Controllers
                 newOrder.Items.Add(new OrderItem { Price = item.Price, ProductId = item.ProductId, Count = item.Count });
             });
 
-            //await _context.AddAsync(newOrder);
-            //await _context.SaveChangesAsync();
+            await _context.AddAsync(newOrder);
+            await _context.SaveChangesAsync();
 
             var orderCreatedEvent = new OrderCreatedEvent
             {

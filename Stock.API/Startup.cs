@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Stock.API.Models;
+using Microsoft.EntityFrameworkCore;
+using MassTransit;
+using Stock.API.Subscribers;
+using Shared.Settings;
 
 namespace Stock.API
 {
@@ -26,7 +31,23 @@ namespace Stock.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<OrderCreatedEventSubscriber>();
+                x.UsingRabbitMq((context, configuration) =>
+                {
+                    configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
+                    configuration.ReceiveEndpoint(RabbitMQSettings.StockOrderCreatedEventQueueName,e =>
+                    {
+                        e.ConfigureConsumer<OrderCreatedEventSubscriber>(context);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseInMemoryDatabase("StockDb");       
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

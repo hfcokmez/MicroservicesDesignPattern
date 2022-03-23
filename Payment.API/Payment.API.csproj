@@ -8,6 +8,8 @@
     <None Remove="MassTransit.AspNetCore" />
     <None Remove="MassTransit.RabbitMQ" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Subscriber\" />
+    <None Remove="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
@@ -18,5 +20,9 @@
     <ProjectReference Include="..\Shared\Shared.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Subscribers\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>

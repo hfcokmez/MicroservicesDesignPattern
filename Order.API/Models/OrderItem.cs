@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Order.API.Model
+namespace Order.API.Models
 {
     public class OrderItem
     {

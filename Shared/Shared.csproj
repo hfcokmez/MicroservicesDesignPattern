@@ -8,9 +8,11 @@
     <None Remove="MassTransit.AspNetCore" />
     <None Remove="Event\" />
     <None Remove="Messages\" />
+    <None Remove="Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\" />
     <Folder Include="Messages\" />
+    <Folder Include="Settings\" />
   </ItemGroup>
 </Project>

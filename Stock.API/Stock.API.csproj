@@ -8,15 +8,27 @@
     <None Remove="MassTransit.AspNetCore" />
     <None Remove="MassTransit.RabbitMQ" />
     <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Models\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Microsoft.EntityFrameworkCore.InMemory" />
+    <None Remove="Subscribers\" />
+    <None Remove="Controllers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.15" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Subscribers\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>
