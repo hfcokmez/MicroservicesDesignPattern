@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Shared.Events
 {
-    public class PaymentSuccessedEvent
+    public class PaymentCompletedEvent
     {
         public int OrderId { get; set; }
         public string BuyerId { get; set; }

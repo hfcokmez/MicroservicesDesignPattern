@@ -15,6 +15,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Controllers\" />
     <None Remove="DTOs\" />
+    <None Remove="Subscribers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
@@ -40,5 +41,6 @@
     <Folder Include="Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Subscribers\" />
   </ItemGroup>
 </Project>

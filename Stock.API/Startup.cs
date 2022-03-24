@@ -33,13 +33,18 @@ namespace Stock.API
         {
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<OrderCreatedEventSubscriber>();
+                x.AddConsumer<OrderCreatedEventConsumer>();
+                x.AddConsumer<PaymentFailedEventConsumer>();
                 x.UsingRabbitMq((context, configuration) =>
                 {
                     configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
                     configuration.ReceiveEndpoint(RabbitMQSettings.StockOrderCreatedEventQueueName,e =>
                     {
-                        e.ConfigureConsumer<OrderCreatedEventSubscriber>(context);
+                        e.ConfigureConsumer<OrderCreatedEventConsumer>(context);
+                    });
+                    configuration.ReceiveEndpoint(RabbitMQSettings.StockPaymentFailedEventQueueName, e =>
+                    {
+                        e.ConfigureConsumer<PaymentFailedEventConsumer>(context);
                     });
                 });
             });

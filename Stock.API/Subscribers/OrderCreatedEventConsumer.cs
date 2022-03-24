@@ -12,14 +12,14 @@ using Stock.API.Models;
 
 namespace Stock.API.Subscribers
 {
-    public class OrderCreatedEventSubscriber : IConsumer<OrderCreatedEvent>
+    public class OrderCreatedEventConsumer : IConsumer<OrderCreatedEvent>
     {
         private readonly AppDbContext _context;
-        private readonly ILogger<OrderCreatedEventSubscriber> _logger;
+        private readonly ILogger<OrderCreatedEventConsumer> _logger;
         private readonly ISendEndpointProvider _sendEndpointProvider;
         private readonly IPublishEndpoint _publishEndpoint;
 
-        public OrderCreatedEventSubscriber(AppDbContext context, ILogger<OrderCreatedEventSubscriber> logger, ISendEndpointProvider sendEndpointProvider, IPublishEndpoint publishEndpoint)
+        public OrderCreatedEventConsumer(AppDbContext context, ILogger<OrderCreatedEventConsumer> logger, ISendEndpointProvider sendEndpointProvider, IPublishEndpoint publishEndpoint)
         {
             _context = context;
             _logger = logger;

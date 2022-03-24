@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -11,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Payment.API.Subscriber;
+using Shared.Settings;
 
 namespace Payment.API
 {
@@ -28,6 +31,19 @@ namespace Payment.API
         {
 
             services.AddControllers();
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<StockReservedEventSubscriber>();
+                x.UsingRabbitMq((context, configuration) =>
+                {
+                    configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
+                    configuration.ReceiveEndpoint(RabbitMQSettings.StockReservedEventQueueName, e =>
+                    {
+                        e.ConfigureConsumer<StockReservedEventSubscriber>(context);
+                    });
+                });
+            });
+            services.AddMassTransitHostedService();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Microservices Payment API", Version = "v1" });

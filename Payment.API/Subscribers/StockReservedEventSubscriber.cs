@@ -23,12 +23,12 @@ namespace Payment.API.Subscriber
             if(balance > context.Message.Payment.TotalPrice)
             {
                 _logger.LogInformation($"{context.Message.Payment.TotalPrice} TL was withdrawn from credit card for User Id: {context.Message.BuyerId}");
-                await _publishEndpoint.Publish(new PaymentSuccessedEvent { BuyerId = context.Message.BuyerId, OrderId = context.Message.OrderId });
+                await _publishEndpoint.Publish(new PaymentCompletedEvent { BuyerId = context.Message.BuyerId, OrderId = context.Message.OrderId });
             }
             else
             {
                 _logger.LogInformation($"{context.Message.Payment.TotalPrice} TL wasn't withdrawn from credit card for User Id: {context.Message.BuyerId}");
-                await _publishEndpoint.Publish(new PaymentFailedEvent { BuyerId = context.Message.BuyerId, OrderId = context.Message.OrderId, Message = "Not enough balance." });
+                await _publishEndpoint.Publish(new PaymentFailedEvent { BuyerId = context.Message.BuyerId, OrderId = context.Message.OrderId, Message = "Not enough balance.", OrderItems = context.Message.OrderItems });
             }
         }
     }
