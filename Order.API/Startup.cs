@@ -14,7 +14,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Order.API.Models;
-using Order.API.Subscribers;
 using Shared.Settings;
 
 namespace Order.API
@@ -33,24 +32,9 @@ namespace Order.API
         {
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<PaymentCompletedEventConsumer>();
-                x.AddConsumer<PaymentFailedEventConsumer>();
-                x.AddConsumer<StockNotReservedEventConsumer>();
                 x.UsingRabbitMq((context, configuration) =>
                 {
                     configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
-                    configuration.ReceiveEndpoint(RabbitMQSettings.OrderPaymentCompletedEventQueueName, e =>
-                    {
-                        e.ConfigureConsumer<PaymentCompletedEventConsumer>(context);
-                    });
-                    configuration.ReceiveEndpoint(RabbitMQSettings.OrderPaymentFailedEventQueueName, e =>
-                    {
-                        e.ConfigureConsumer<PaymentFailedEventConsumer>(context);
-                    });
-                    configuration.ReceiveEndpoint(RabbitMQSettings.StockNotReservedEventQueueName, e =>
-                    {
-                        e.ConfigureConsumer<StockNotReservedEventConsumer>(context);
-                    });
                 });
             });
             services.AddMassTransitHostedService();

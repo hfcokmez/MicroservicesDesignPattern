@@ -9,8 +9,6 @@ using Order.API.Models;
 using Shared.Event;
 using Shared.Messages;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace Order.API.Controllers
 {
     [Route("api/[controller]")]
