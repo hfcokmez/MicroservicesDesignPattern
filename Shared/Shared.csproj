@@ -9,10 +9,14 @@
     <None Remove="Event\" />
     <None Remove="Messages\" />
     <None Remove="Settings\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Concrete\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\" />
     <Folder Include="Messages\" />
     <Folder Include="Settings\" />
+    <Folder Include="Abstract\" />
+    <Folder Include="Concrete\" />
   </ItemGroup>
 </Project>

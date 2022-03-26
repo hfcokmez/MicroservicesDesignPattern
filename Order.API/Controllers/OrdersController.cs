@@ -6,8 +6,11 @@ using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Order.API.DTOs;
 using Order.API.Models;
+using Shared.Abstract;
+using Shared.Concrete;
 using Shared.Event;
 using Shared.Messages;
+using Shared.Settings;
 
 namespace Order.API.Controllers
 {
@@ -15,12 +18,12 @@ namespace Order.API.Controllers
     public class OrdersController : Controller
     {
         private readonly AppDbContext _context;
-        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ISendEndpointProvider _sendEndpoint;
 
-        public OrdersController(AppDbContext context, IPublishEndpoint publish)
+        public OrdersController(AppDbContext context, ISendEndpointProvider sendEndpoint)
         {
             _context = context;
-            _publishEndpoint = publish;
+            _sendEndpoint = sendEndpoint;
         }
 
         [HttpPost]
@@ -42,17 +45,20 @@ namespace Order.API.Controllers
             await _context.AddAsync(newOrder);
             await _context.SaveChangesAsync();
 
-            var orderCreatedEvent = new OrderCreatedEvent
+            var orderCreatedRequestEvent = new OrderCreatedRequestEvent
             {
                 BuyerId = orderCreate.BuyerId,
                 OrderId = newOrder.Id,
-                PaymentMessage = new PaymentMessage { CardName = orderCreate.Payment.CardName, CardNumber = orderCreate.Payment.CardNumber, CVV = orderCreate.Payment.CVV,
+                Payment = new PaymentMessage { CardName = orderCreate.Payment.CardName, CardNumber = orderCreate.Payment.CardNumber, CVV = orderCreate.Payment.CVV,
                     Expiration = orderCreate.Payment.Expiration, TotalPrice = orderCreate.OrderItems.Sum(x => x.Price * x.Count)}
             };
             orderCreate.OrderItems.ForEach(item => {
-                orderCreatedEvent.OrderItems.Add(new OrderItemMessage { Count = item.Count, ProductId = item.ProductId });
+                orderCreatedRequestEvent.OrderItems.Add(new OrderItemMessage { Count = item.Count, ProductId = item.ProductId });
             });
-            await _publishEndpoint.Publish(orderCreatedEvent);
+
+            var sendEndpoint = await _sendEndpoint.GetSendEndpoint(new Uri($"queue{RabbitMQSettings.OrderSaga}"));
+
+            await sendEndpoint.Send<IOrderCreatedRequestEvent>(orderCreatedRequestEvent) ;
             return Ok();
         }
 
