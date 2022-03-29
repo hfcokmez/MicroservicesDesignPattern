@@ -45,8 +45,6 @@ namespace SagaStateMachineWorkerService
                             });
                         }));
                     });
-
-
                     services.AddHostedService<Worker>();
                 });
     }
