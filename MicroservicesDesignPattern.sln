@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.API", "Payment.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{ED39434B-0CE8-4CD2-B245-CE688B214AED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SagaStateMachineWorkerService", "SagaStateMachineWorkerService\SagaStateMachineWorkerService.csproj", "{B80C603E-3707-435F-9C8B-924D29322E69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +35,21 @@ Global
 		{ED39434B-0CE8-4CD2-B245-CE688B214AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED39434B-0CE8-4CD2-B245-CE688B214AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED39434B-0CE8-4CD2-B245-CE688B214AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B80C603E-3707-435F-9C8B-924D29322E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B80C603E-3707-435F-9C8B-924D29322E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B80C603E-3707-435F-9C8B-924D29322E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B80C603E-3707-435F-9C8B-924D29322E69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {980EFB66-ED18-4FDA-A932-DC84AD2D5A1F}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
 	EndGlobalSection
 EndGlobal
