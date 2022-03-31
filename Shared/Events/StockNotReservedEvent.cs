@@ -1,9 +1,16 @@
 ﻿using System;
+using Shared.Abstract;
+
 namespace Shared.Events
 {
-    public class StockNotReservedEvent
+    public class StockNotReservedEvent : IStockNotReservedEvent
     {
-        public int OrderId { get; set; }
+        public StockNotReservedEvent(Guid correlationId)
+        {
+            CorrelationId = correlationId;
+        }
+
+        public Guid CorrelationId { get; }
         public string Message { get; set; }
     }
 }

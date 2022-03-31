@@ -22,4 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\OrderStateMachine.cs" />
+  </ItemGroup>
 </Project>

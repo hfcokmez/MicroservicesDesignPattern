@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using MassTransit;
+using Shared.Abstract;
 using Shared.Messages;
 
 namespace Shared.Events
 {
-    public class StockReservedEvent
+    public class StockReservedEvent : IStockReservedEvent
     {
-        public int OrderId { get; set; }
-        public string BuyerId { get; set; }
-        public PaymentMessage Payment { get; set; }
-        public List<OrderItemMessage> OrderItems { get; set; } = new List<OrderItemMessage>();
+        public StockReservedEvent(Guid CorrelationId)
+        {
+            this.CorrelationId = CorrelationId;
+        }
+        public List<OrderItemMessage> OrderItems { get; set; }
+        public Guid CorrelationId { get;  }
     }
 }

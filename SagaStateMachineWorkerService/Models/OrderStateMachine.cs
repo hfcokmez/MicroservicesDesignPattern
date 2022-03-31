@@ -1,6 +1,7 @@
 ﻿using Automatonymous;
 using Shared;
 using Shared.Abstract;
+using Shared.Event;
 using Shared.Events;
 using Shared.Messages;
 using System;
@@ -39,6 +40,8 @@ namespace SagaStateMachineWorkerService.Models
                 context.Instance.TotalPrice = context.Data.Payment.TotalPrice;
             })
             .Then(context => { Console.WriteLine($"OrderCreatedRequestEvent before : {context.Instance}"); })
+            .Publish(context => new OrderCreatedEvent(context.Instance.CorrelationId) { OrderItems = context.Data.OrderItems })
+            .TransitionTo(OrderCreated)
             .Then(context => { Console.WriteLine($"OrderCreatedRequestEvent After : {context.Instance}"); }));
 
 

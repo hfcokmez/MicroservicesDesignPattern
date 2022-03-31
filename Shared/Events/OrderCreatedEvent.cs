@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using MassTransit;
+using Shared.Abstract;
 using Shared.Messages;
 
 namespace Shared.Event
 {
-    public class OrderCreatedEvent
+    public class OrderCreatedEvent : IOrderCreatedEvent
     {
-        public int OrderId { get; set; }
-        public string BuyerId { get; set; }
-        public PaymentMessage PaymentMessage { get; set; }
-        public List<OrderItemMessage> OrderItems { get; set; } = new List<OrderItemMessage>();
+        public OrderCreatedEvent(Guid CorrelationId)
+        {
+            this.CorrelationId = CorrelationId;
+        }
+        public List<OrderItemMessage> OrderItems { get; set; }
+        public Guid CorrelationId { get; }
     }
 }
