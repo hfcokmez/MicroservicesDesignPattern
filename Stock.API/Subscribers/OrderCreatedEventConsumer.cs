@@ -55,7 +55,7 @@ namespace Stock.API.Subscribers
                     OrderId = context.Message.OrderId,
                     OrderItems = context.Message.OrderItems
                 };
-                await _sendEndpointProvider.Send(stockReservedEvent);
+                await sendEndpoint.Send(stockReservedEvent);
             }
             else
             {
