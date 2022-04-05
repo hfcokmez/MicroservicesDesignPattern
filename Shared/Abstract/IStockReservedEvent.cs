@@ -8,7 +8,6 @@ namespace Shared.Abstract
     public interface IStockReservedEvent : CorrelatedBy<Guid>
     {
         List<OrderItemMessage> OrderItems { get; set; }
-        Guid CorrelationId { get; }
-
+        new Guid CorrelationId { get; }
     }
 }

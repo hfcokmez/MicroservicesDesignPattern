@@ -10,7 +10,6 @@
     <None Remove="Messages\" />
     <None Remove="Settings\" />
     <None Remove="Interfaces\" />
-    <None Remove="Concrete\" />
     <None Remove="MassTransit" />
   </ItemGroup>
   <ItemGroup>
@@ -18,7 +17,6 @@
     <Folder Include="Messages\" />
     <Folder Include="Settings\" />
     <Folder Include="Abstract\" />
-    <Folder Include="Concrete\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="7.1.2" />
