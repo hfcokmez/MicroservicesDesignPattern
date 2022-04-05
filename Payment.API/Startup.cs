@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Payment.API.Subscribers;
 using Shared.Settings;
 
 namespace Payment.API
@@ -32,9 +33,14 @@ namespace Payment.API
             services.AddControllers();
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<StockReservedRequestPaymentConsumer>();
                 x.UsingRabbitMq((context, configuration) =>
                 {
                     configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
+                    configuration.ReceiveEndpoint(RabbitMQSettings.PaymentStockReservedRequestQueueName, e =>
+                    {
+                        e.ConfigureConsumer<StockReservedRequestPaymentConsumer>(context);
+                    });
                 });
             });
             services.AddMassTransitHostedService();

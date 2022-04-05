@@ -1,9 +1,14 @@
 ﻿using System;
+using Shared.Abstract;
+
 namespace Shared.Events
 {
-    public class PaymentCompletedEvent
+    public class PaymentCompletedEvent : IPaymentCompletedEvent
     {
-        public int OrderId { get; set; }
-        public string BuyerId { get; set; }
+        public PaymentCompletedEvent(Guid correlationId)
+        {
+            CorrelationId = correlationId;
+        }    
+        public Guid CorrelationId { get; }
     }
 }
