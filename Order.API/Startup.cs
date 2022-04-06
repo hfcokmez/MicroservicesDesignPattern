@@ -34,12 +34,17 @@ namespace Order.API
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<OrderRequestCompletedEventConsumer>();
+                x.AddConsumer<OrderRequestFailedEventConsumer>();
                 x.UsingRabbitMq((context, configuration) =>
                 {
                     configuration.Host(Configuration.GetConnectionString("RabbitMQ"));
                     configuration.ReceiveEndpoint(RabbitMQSettings.OrderRequestCompletedEventQueueName, x =>
                     {
                         x.ConfigureConsumer<OrderRequestCompletedEventConsumer>(context);
+                    });
+                    configuration.ReceiveEndpoint(RabbitMQSettings.OrderRequestFailedEventQueueName, x =>
+                    {
+                        x.ConfigureConsumer<OrderRequestFailedEventConsumer>(context);
                     });
                 });
             });

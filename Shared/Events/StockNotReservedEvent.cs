@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using Shared.Abstract;
 
 namespace Shared.Events
